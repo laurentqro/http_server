@@ -20,14 +20,14 @@ defmodule HttpServer.Handler do
     ("vendor/cob_spec/public" <> path)
     |> Path.expand
     |> File.read
-    |> handle(conn)
+    |> handle_file(conn)
   end
 
-  def handle({:ok, resp_body}, conn) do
+  def handle_file({:ok, resp_body}, conn) do
     %{ conn | resp_body: resp_body, status: 200 }
   end
 
-  def handle({:error, :enoent}, conn) do
+  def handle_file({:error, :enoent}, conn) do
     %{ conn | resp_body: "File not found", status: 404 }
   end
 
