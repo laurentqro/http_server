@@ -21,11 +21,11 @@ defmodule HttpServer.Handler do
     %{ conn | status: 204 }
   end
 
-  def handle_file({:ok, resp_body}, conn) do
+  defp handle_file({:ok, resp_body}, conn) do
     %{ conn | resp_body: resp_body, status: 200 }
   end
 
-  def handle_file({:error, :enoent}, conn) do
+  defp handle_file({:error, :enoent}, conn) do
     %{ conn | resp_body: "File not found", status: 404 }
   end
 
