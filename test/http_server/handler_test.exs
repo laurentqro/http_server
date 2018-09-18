@@ -54,15 +54,19 @@ defmodule HttpServer.Handler.Test do
   end
 
   test "PATCH request returns a 204" do
+    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.write("hello world")
+
     request = """
-    PATCH /patch-content.txt HTTP/1.1
+    PATCH /hello-world.txt HTTP/1.1
 
     """
 
     expected_response = """
     HTTP/1.1 204 No content
-    Content-Location: /patch-content.txt
+    Content-Location: /hello-world.txt
     """
+
+    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.rm
 
     assert HttpServer.Handler.handle(request) == expected_response
   end
