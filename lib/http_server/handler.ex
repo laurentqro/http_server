@@ -11,14 +11,12 @@ defmodule HttpServer.Handler do
 
   defp route(conn = %{ method: "GET", path: path }) do
     @public_dir <> path
-    |> Path.expand
     |> File.read
     |> handle_file(conn)
   end
 
   defp route(conn = %{ method: "PATCH", path: path }) do
     @public_dir <> path
-    |> Path.expand
     |> File.write(conn.req_body)
 
     %{ conn | status: 204 }
