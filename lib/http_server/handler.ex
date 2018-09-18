@@ -27,6 +27,10 @@ defmodule HttpServer.Handler do
     %{ conn | resp_body: resp_body, status: 200 }
   end
 
+  def handle({:error, :enoent}, conn) do
+    %{ conn | resp_body: "File not found", status: 404 }
+  end
+
   defp format_response(conn) do
     """
     HTTP/1.1 #{conn.status} #{reason(conn.status)}
@@ -39,7 +43,8 @@ defmodule HttpServer.Handler do
 
   defp reason(status) do
     %{
-      200 => "OK"
+      200 => "OK",
+      404 => "Not found"
     }[status]
   end
 end
