@@ -9,7 +9,7 @@ defmodule HttpServer.Parser.Test do
     goodbye world
     """
 
-    %{method: method, path: path, req_body: req_body, resp_body: "", status: ""} = HttpServer.Parser.parse(request)
+    %{method: _method, path: _path, req_body: req_body, resp_body: "", status: ""} = HttpServer.Parser.parse(request)
 
     assert req_body == "goodbye world\n"
   end
