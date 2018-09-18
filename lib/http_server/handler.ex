@@ -6,14 +6,22 @@ defmodule HttpServer.Handler do
     |> format_response
   end
 
-  defp parse(request) do
+  def parse(request) do
+    [req_head, req_body] = request |> String.split("\n\n")
+
     [method, path, _] =
-      request
+      req_head
       |> String.split("\n")
       |> List.first
       |> String.split(" ")
 
-    %{ method: method, path: path, resp_body: "", status: "" }
+    %{
+      method: method,
+      path: path,
+      req_body: req_body,
+      resp_body: "",
+      status: ""
+    }
   end
 
   defp route(conn = %{ method: "GET", path: path }) do
