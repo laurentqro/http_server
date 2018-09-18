@@ -79,4 +79,21 @@ defmodule HttpServer.Handler.Test do
 
     assert req_body == "goodbye world\n"
   end
+
+  test "PATCH updates the target resource" do
+    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.write("hello world")
+
+    request = """
+    PATCH /hello-world.txt HTTP/1.1
+    Content-Length: 11
+
+    goodbye world
+    """
+
+    HttpServer.Handler.handle(request)
+
+    {:ok, updated_content} = ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.read
+
+    assert updated_content == "goodbye world\n"
+  end
 end

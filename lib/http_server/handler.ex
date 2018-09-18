@@ -32,6 +32,10 @@ defmodule HttpServer.Handler do
   end
 
   defp route(conn = %{ method: "PATCH", path: path }) do
+    ("vendor/cob_spec/public" <> path)
+    |> Path.expand
+    |> File.write(conn.req_body)
+
     %{ conn | status: 204 }
   end
 
