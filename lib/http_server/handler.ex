@@ -1,9 +1,10 @@
 defmodule HttpServer.Handler do
+
   def handle(request) do
     request
     |> HttpServer.Parser.parse
     |> route
-    |> format_response
+    |> HttpServer.Formatter.format_response
   end
 
   defp route(conn = %{ method: "GET", path: path }) do
@@ -27,30 +28,5 @@ defmodule HttpServer.Handler do
 
   defp handle_file({:error, :enoent}, conn) do
     %{ conn | resp_body: "File not found", status: 404 }
-  end
-
-  defp format_response(conn = %{ method: "GET"}) do
-    """
-    HTTP/1.1 #{conn.status} #{reason(conn.status)}
-    Content-Type: text/html
-    Content-Length: #{String.length(conn.resp_body)}
-
-    #{conn.resp_body}
-    """
-  end
-
-  defp format_response(conn = %{ method: "PATCH"}) do
-    """
-    HTTP/1.1 #{conn.status} #{reason(conn.status)}
-    Content-Location: #{conn.path}
-    """
-  end
-
-  defp reason(status) do
-    %{
-      200 => "OK",
-      204 => "No content",
-      404 => "Not found"
-    }[status]
   end
 end
