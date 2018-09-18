@@ -81,6 +81,8 @@ defmodule HttpServer.Handler.Test do
 
     {:ok, updated_content} = ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.read
 
+    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.rm
+
     assert updated_content == "goodbye world\n"
   end
 end
