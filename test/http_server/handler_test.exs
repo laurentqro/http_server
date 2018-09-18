@@ -89,4 +89,16 @@ defmodule HttpServer.Handler.Test do
 
     assert updated_content == "goodbye world\n"
   end
+
+  test "HEAD request" do
+    request = """
+    HEAD / HTTP/1.1
+    """
+
+    expected_response = """
+    HTTP/1.1 200 OK
+    """
+
+    assert HttpServer.Handler.handle(request) == expected_response
+  end
 end

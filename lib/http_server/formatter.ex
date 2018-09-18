@@ -16,6 +16,12 @@ defmodule HttpServer.Formatter do
     """
   end
 
+  def format_response(conn = %{ method: "HEAD"}) do
+    """
+    HTTP/1.1 #{conn.status} #{reason(conn.status)}
+    """
+  end
+
   defp reason(status) do
     %{
       200 => "OK",

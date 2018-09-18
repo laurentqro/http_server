@@ -14,6 +14,10 @@ defmodule HttpServer.Router do
     %{ conn | status: 204 }
   end
 
+  def route(conn = %{ method: "HEAD", path: path }) do
+    %{ conn | status: 200 }
+  end
+
   defp handle_file({:ok, resp_body}, conn) do
     %{ conn | resp_body: resp_body, status: 200 }
   end
