@@ -52,4 +52,21 @@ defmodule HttpServer.Handler.Test do
 
     assert HttpServer.Handler.handle(request) == expected_response
   end
+
+  test "PATCH request returns a 204" do
+    request = """
+    PATCH /patch-content.txt HTTP/1.1
+
+    """
+
+    expected_response = """
+    HTTP/1.1 204 No content
+    Content-Type: text/html
+    Content-Length: 0
+
+
+    """
+
+    assert HttpServer.Handler.handle(request) == expected_response
+  end
 end

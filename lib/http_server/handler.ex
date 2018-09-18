@@ -23,6 +23,10 @@ defmodule HttpServer.Handler do
     |> handle_file(conn)
   end
 
+  defp route(conn = %{ method: "PATCH", path: path }) do
+    %{ conn | status: 204 }
+  end
+
   def handle_file({:ok, resp_body}, conn) do
     %{ conn | resp_body: resp_body, status: 200 }
   end
@@ -44,6 +48,7 @@ defmodule HttpServer.Handler do
   defp reason(status) do
     %{
       200 => "OK",
+      204 => "No content",
       404 => "Not found"
     }[status]
   end
