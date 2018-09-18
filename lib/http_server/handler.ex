@@ -1,5 +1,7 @@
 defmodule HttpServer.Handler do
 
+  @public_dir "vendor/cob_spec/public"
+
   def handle(request) do
     request
     |> HttpServer.Parser.parse
@@ -8,14 +10,14 @@ defmodule HttpServer.Handler do
   end
 
   defp route(conn = %{ method: "GET", path: path }) do
-    ("vendor/cob_spec/public" <> path)
+    @public_dir <> path
     |> Path.expand
     |> File.read
     |> handle_file(conn)
   end
 
   defp route(conn = %{ method: "PATCH", path: path }) do
-    ("vendor/cob_spec/public" <> path)
+    @public_dir <> path
     |> Path.expand
     |> File.write(conn.req_body)
 
