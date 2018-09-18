@@ -35,13 +35,20 @@ defmodule HttpServer.Handler do
     %{ conn | resp_body: "File not found", status: 404 }
   end
 
-  defp format_response(conn) do
+  defp format_response(conn = %{ method: "GET"}) do
     """
     HTTP/1.1 #{conn.status} #{reason(conn.status)}
     Content-Type: text/html
     Content-Length: #{String.length(conn.resp_body)}
 
     #{conn.resp_body}
+    """
+  end
+
+  defp format_response(conn = %{ method: "PATCH"}) do
+    """
+    HTTP/1.1 #{conn.status} #{reason(conn.status)}
+    Content-Location: #{conn.path}
     """
   end
 

@@ -61,10 +61,7 @@ defmodule HttpServer.Handler.Test do
 
     expected_response = """
     HTTP/1.1 204 No content
-    Content-Type: text/html
-    Content-Length: 0
-
-
+    Content-Location: /patch-content.txt
     """
 
     assert HttpServer.Handler.handle(request) == expected_response
