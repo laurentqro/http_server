@@ -67,19 +67,6 @@ defmodule HttpServer.Handler.Test do
     assert HttpServer.Handler.handle(request) == expected_response
   end
 
-  test "parses the request body" do
-    request = """
-    PATCH /hello-world.txt HTTP/1.1
-    Content-Length: 11
-
-    goodbye world
-    """
-
-    %{method: method, path: path, req_body: req_body, resp_body: "", status: ""} = HttpServer.Handler.parse(request)
-
-    assert req_body == "goodbye world\n"
-  end
-
   test "PATCH updates the target resource" do
     ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.write("hello world")
 
