@@ -3,19 +3,16 @@ defmodule HttpServer.Handler.Test do
 
   test "simple get request" do
     request = """
-    GET /snacks HTTP/1.1
-    Host: pantry.com
-    User-Agent: SnackBrowser/1.0
-    Accept: */*
+    GET /file1 HTTP/1.1
 
     """
 
     expected_response = """
     HTTP/1.1 200 OK
     Content-Type: text/html
-    Content-Length: 22
+    Content-Length: 14
 
-    Twiglets, Crisps, Nuts
+    file1 contents
     """
 
     assert HttpServer.Handler.handle(request) == expected_response
