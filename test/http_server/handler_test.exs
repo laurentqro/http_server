@@ -57,8 +57,8 @@ defmodule HttpServer.Handler.Test do
     ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.write("hello world")
 
     request = """
-    PATCH /hello-world.txt HTTP/1.1
-
+    PATCH /hello-world.txt HTTP/1.1\r
+    \r
     """
 
     expected_response = """
@@ -76,8 +76,8 @@ defmodule HttpServer.Handler.Test do
 
     request = """
     PATCH /hello-world.txt HTTP/1.1
-    Content-Length: 11
-
+    Content-Length: 11\r
+    \r
     goodbye world
     """
 

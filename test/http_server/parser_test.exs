@@ -4,8 +4,8 @@ defmodule HttpServer.Parser.Test do
   test "parses the request body" do
     request = """
     PATCH /hello-world.txt HTTP/1.1
-    Content-Length: 11
-
+    Content-Length: 11\r
+    \r
     goodbye world
     """
 
