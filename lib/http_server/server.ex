@@ -1,4 +1,5 @@
 defmodule HttpServer.Server do
+
   def start(port) do
     {:ok, listening_socket} =
       :gen_tcp.listen(port, [:binary, packet: :raw, active: false, reuseaddr: true])
@@ -42,7 +43,7 @@ defmodule HttpServer.Server do
     IO.puts "Sent response:\n"
     IO.puts response
 
-    :ok = :gen_tcp.close(client_socket)
+    :gen_tcp.close(client_socket)
   end
 end
 
