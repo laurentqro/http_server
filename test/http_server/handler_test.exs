@@ -101,4 +101,43 @@ defmodule HttpServer.Handler.Test do
 
     assert HttpServer.Handler.handle(request) == expected_response
   end
+
+  test "PUT request" do
+    file_path = "/put-request.text"
+    path = "vendor/cob_spec/public" <> file_path
+
+    request = """
+    PUT #{file_path} HTTP/1.1\r
+    Content-Type: text/plain\r
+    Content-Length: 24\r
+    \r
+    Some text for a new file"
+    """
+
+    expected_response = """
+    HTTP/1.1 201 Created
+    """
+
+    assert HttpServer.Handler.handle(request) == expected_response
+
+    File.rm!(path)
+  end
+
+  test "DELETE request deletes target resource" do
+    path = "vendor/cob_spec/public" <> "/delete-me.txt"
+    path |> File.write("delete me")
+
+    request = """
+    DELETE /delete-me.txt HTTP/1.1
+    """
+
+    expected_response = """
+    HTTP/1.1 200 OK
+    """
+
+    assert HttpServer.Handler.handle(request) == expected_response
+
+    {:error, reason} = File.read(path)
+    assert reason == :enoent
+  end
 end

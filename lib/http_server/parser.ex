@@ -59,4 +59,38 @@ defmodule HttpServer.Parser do
       status: ""
     }
   end
+
+  def parse("PUT", request) do
+    [req_head, req_body] = request |> String.split("\r\n\r\n")
+
+    [method, path, _] =
+      req_head
+      |> String.split("\n")
+      |> List.first
+      |> String.split(" ")
+
+    %{
+      method: method,
+      path: path,
+      req_body: req_body,
+      resp_body: "",
+      status: ""
+    }
+  end
+
+  def parse("DELETE", request) do
+    [method, path, _] =
+      request
+      |> String.split("\n")
+      |> List.first
+      |> String.split(" ")
+
+    %{
+      method: method,
+      path: path,
+      req_body: "",
+      resp_body: "",
+      status: ""
+    }
+  end
 end
