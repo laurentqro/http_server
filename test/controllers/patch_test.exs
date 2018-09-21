@@ -14,4 +14,25 @@ defmodule HttpServer.Controllers.Patch.Test do
 
     tear_down()
   end
+
+  test "it creates the resource" do
+    create_fixture()
+
+    conn = %{ path: @path, req_body: "baz", resp_body: "", status: "" }
+    HttpServer.Controllers.Patch.patch(conn)
+
+    {:ok, content} = File.read(@public_dir <> @path)
+
+    assert content == "baz"
+
+    tear_down()
+  end
+
+  defp create_fixture do
+    @public_dir <> @path |> File.write("bar")
+  end
+
+  defp tear_down do
+    File.rm(@public_dir <> @path)
+  end
 end
