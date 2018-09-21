@@ -11,6 +11,16 @@ defmodule HttpServer.Parser.Test do
     assert method == "GET"
   end
 
+  test "parses the request path" do
+    request = """
+    GET /hello-world.txt HTTP/1.1
+    """
+
+    %{method: _method, path: path, req_body: req_body, resp_body: _resp_body, status: _status} = HttpServer.Parser.parse(request)
+
+    assert path == "/hello-world.txt"
+  end
+
   test "parses the request body" do
     request = """
     PATCH /hello-world.txt HTTP/1.1
