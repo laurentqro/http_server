@@ -2,29 +2,29 @@ defmodule HttpServer.Controllers.Get.Test do
   use ExUnit.Case
 
   @public_dir "vendor/cob_spec/public"
+  @path "/foo.txt"
 
   test "it returns 200" do
-    path = "/foo.txt"
-    @public_dir <> path |> File.write("bar")
+    create_fixture()
 
-    conn = %{ path: path, resp_body: "", status: "" }
+    conn = %{ path: @path, resp_body: "", status: "" }
     conn = HttpServer.Controllers.Get.get(conn)
 
     assert conn.status == 200
 
-    File.rm(@public_dir <> path)
+    tear_down()
   end
 
   test "it assigns file content to response body" do
-    path = "/foo.txt"
-    @public_dir <> path |> File.write("bar")
-    conn = %{ path: path, resp_body: "", status: "" }
+    create_fixture()
+
+    conn = %{ path: @path, resp_body: "", status: "" }
 
     conn = HttpServer.Controllers.Get.get(conn)
 
     assert conn.resp_body == "bar"
 
-    File.rm(@public_dir <> path)
+    tear_down()
   end
 
   test "it returns 404" do
@@ -32,5 +32,13 @@ defmodule HttpServer.Controllers.Get.Test do
     conn = HttpServer.Controllers.Get.get(conn)
 
     assert conn.status == 404
+  end
+
+  defp create_fixture do
+    @public_dir <> @path |> File.write!("bar")
+  end
+
+  defp tear_down do
+    File.rm(@public_dir <> @path)
   end
 end
