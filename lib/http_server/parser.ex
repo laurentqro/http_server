@@ -10,7 +10,7 @@ defmodule HttpServer.Parser do
     parse(method, request)
   end
 
-  def parse("GET", request) do
+  defp parse("GET", request) do
     [method, path, _] =
       request
       |> String.split("\n")
@@ -26,7 +26,7 @@ defmodule HttpServer.Parser do
     }
   end
 
-  def parse("PATCH", request) do
+  defp parse("PATCH", request) do
     [req_head, req_body] = request |> String.split("\r\n\r\n")
 
     [method, path, _] =
@@ -44,7 +44,7 @@ defmodule HttpServer.Parser do
     }
   end
 
-  def parse("HEAD", request) do
+  defp parse("HEAD", request) do
     [method, path, _] =
       request
       |> String.split("\n")
@@ -60,7 +60,7 @@ defmodule HttpServer.Parser do
     }
   end
 
-  def parse("PUT", request) do
+  defp parse("PUT", request) do
     [req_head, req_body] = request |> String.split("\r\n\r\n")
 
     [method, path, _] =
@@ -78,7 +78,7 @@ defmodule HttpServer.Parser do
     }
   end
 
-  def parse("DELETE", request) do
+  defp parse("DELETE", request) do
     [method, path, _] =
       request
       |> String.split("\n")
