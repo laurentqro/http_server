@@ -1,6 +1,16 @@
 defmodule HttpServer.Parser.Test do
   use ExUnit.Case
 
+  test "parses the HTTP method" do
+    request = """
+    GET /hello-world.txt HTTP/1.1
+    """
+
+    %{method: method, path: _path, req_body: req_body, resp_body: _resp_body, status: _status} = HttpServer.Parser.parse(request)
+
+    assert method == "GET"
+  end
+
   test "parses the request body" do
     request = """
     PATCH /hello-world.txt HTTP/1.1
