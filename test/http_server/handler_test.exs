@@ -53,43 +53,6 @@ defmodule HttpServer.Handler.Test do
     assert HttpServer.Handler.handle(request) == expected_response
   end
 
-  test "PATCH request returns a 204" do
-    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.write("hello world")
-
-    request = """
-    PATCH /hello-world.txt HTTP/1.1\r
-    \r
-    """
-
-    expected_response = """
-    HTTP/1.1 204 No content
-    Content-Location: /hello-world.txt
-    """
-
-    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.rm
-
-    assert HttpServer.Handler.handle(request) == expected_response
-  end
-
-  test "PATCH updates the target resource" do
-    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.write("hello world")
-
-    request = """
-    PATCH /hello-world.txt HTTP/1.1
-    Content-Length: 11\r
-    \r
-    goodbye world
-    """
-
-    HttpServer.Handler.handle(request)
-
-    {:ok, updated_content} = ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.read
-
-    ("vendor/cob_spec/public" <> "/hello-world.txt") |> File.rm
-
-    assert updated_content == "goodbye world\n"
-  end
-
   test "HEAD request" do
     request = """
     HEAD / HTTP/1.1
