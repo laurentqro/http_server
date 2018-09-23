@@ -10,7 +10,7 @@ defmodule HttpServer.Parser do
     parse(method, request)
   end
 
-  defp parse(method, request) when method in ["GET", "HEAD", "DELETE"] do
+  defp parse(method, request) when method in ["GET", "HEAD", "DELETE", "OPTIONS"] do
     [method, path, _] =
       request
       |> String.split("\n")
@@ -21,7 +21,8 @@ defmodule HttpServer.Parser do
       method: method,
       path: path,
       resp_body: "",
-      status: ""
+      status: "",
+      allow: ""
     }
   end
 
