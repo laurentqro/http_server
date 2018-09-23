@@ -2,7 +2,7 @@ defmodule HttpServer.Formatter do
   def format_response(conn = %{ method: "GET"}) do
     """
     HTTP/1.1 #{conn.status} #{reason(conn.status)}
-    Content-Type: text/html
+    Content-Type: #{conn.content_type}
     Content-Length: #{String.length(conn.resp_body)}
 
     #{conn.resp_body}

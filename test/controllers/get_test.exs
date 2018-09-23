@@ -7,7 +7,7 @@ defmodule HttpServer.Controllers.Get.Test do
   test "it returns 200" do
     create_fixture()
 
-    conn = %{ path: @path, resp_body: "", status: "" }
+    conn = %{ path: @path, resp_body: "", status: "", content_type: "" }
     conn = HttpServer.Controllers.Get.get(conn)
 
     assert conn.status == 200
@@ -18,7 +18,7 @@ defmodule HttpServer.Controllers.Get.Test do
   test "it assigns file content to response body" do
     create_fixture()
 
-    conn = %{ path: @path, resp_body: "", status: "" }
+    conn = %{ path: @path, resp_body: "", status: "", content_type: "" }
 
     conn = HttpServer.Controllers.Get.get(conn)
 

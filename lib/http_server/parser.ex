@@ -22,7 +22,8 @@ defmodule HttpServer.Parser do
       path: path,
       resp_body: "",
       status: "",
-      allow: ""
+      allow: "",
+      content_type: ""
     }
   end
 

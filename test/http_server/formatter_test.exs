@@ -2,13 +2,29 @@ defmodule HttpServer.Formatter.Test do
   use ExUnit.Case
 
   test "response to GET request" do
-    conn = %{ method: "GET", status: 200, resp_body: "Content" }
+    conn = %{ method: "GET", status: 200, resp_body: "Content", content_type: "type/extension" }
 
     response = HttpServer.Formatter.format_response(conn)
 
     expected = """
     HTTP/1.1 200 OK
-    Content-Type: text/html
+    Content-Type: type/extension
+    Content-Length: 7
+
+    Content
+    """
+
+    assert response == expected
+  end
+
+  test "response to GET request for a JPEG image file" do
+    conn = %{ method: "GET", status: 200, resp_body: "Content", content_type: "type/extension" }
+
+    response = HttpServer.Formatter.format_response(conn)
+
+    expected = """
+    HTTP/1.1 200 OK
+    Content-Type: type/extension
     Content-Length: 7
 
     Content

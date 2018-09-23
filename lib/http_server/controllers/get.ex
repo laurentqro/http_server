@@ -8,7 +8,7 @@ defmodule HttpServer.Controllers.Get do
   end
 
   defp handle_file({:ok, resp_body}, conn) do
-    %{ conn | resp_body: resp_body, status: 200 }
+    %{ conn | resp_body: resp_body, status: 200, content_type: "image/jpeg" }
   end
 
   defp handle_file({:error, :enoent}, conn) do
