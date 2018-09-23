@@ -20,7 +20,6 @@ defmodule HttpServer.Parser do
     %{
       method: method,
       path: path,
-      req_body: "",
       resp_body: "",
       status: ""
     }
