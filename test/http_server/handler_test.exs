@@ -122,22 +122,4 @@ defmodule HttpServer.Handler.Test do
 
     File.rm!(path)
   end
-
-  test "DELETE request deletes target resource" do
-    path = "vendor/cob_spec/public" <> "/delete-me.txt"
-    path |> File.write("delete me")
-
-    request = """
-    DELETE /delete-me.txt HTTP/1.1
-    """
-
-    expected_response = """
-    HTTP/1.1 200 OK
-    """
-
-    assert HttpServer.Handler.handle(request) == expected_response
-
-    {:error, reason} = File.read(path)
-    assert reason == :enoent
-  end
 end
