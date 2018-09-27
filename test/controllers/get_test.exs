@@ -35,7 +35,7 @@ defmodule HttpServer.Controllers.Get.Test do
   end
 
   test "it returns directory listing" do
-    conn = %{ path: "/", resp_body: "", status: 200 }
+    conn = %{ path: "/", resp_body: "", status: "" }
     conn = HttpServer.Controllers.Get.get(conn)
 
     {:ok, directory_listing} = @public_dir |> File.ls
@@ -45,6 +45,14 @@ defmodule HttpServer.Controllers.Get.Test do
     for file_name <- directory_listing do
       assert conn.resp_body |> String.contains?(~s(<a href="/#{file_name}">#{file_name}</a>))
     end
+  end
+
+  test "/logs returns 401 unauthorized" do
+    conn = %{ path: "/logs", resp_body: "", status: "", headers: %{} }
+    conn = HttpServer.Controllers.Get.get(conn)
+
+    assert conn.status == 401
+    assert conn.headers == %{"WWW-Authenticate" => ~s(Basic realm="Access to HTTP server") }
   end
 
   defp create_fixture do

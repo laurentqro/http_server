@@ -1,4 +1,11 @@
 defmodule HttpServer.Formatter do
+  def format_response(conn = %{ method: "GET", path: "/logs" }) do
+    """
+    HTTP/1.1 #{conn.status} #{reason(conn.status)}
+    WWW-Authenticate: #{conn.headers["WWW-Authenticate"]}
+    """
+  end
+
   def format_response(conn = %{ method: "GET"}) do
     """
     HTTP/1.1 #{conn.status} #{reason(conn.status)}
@@ -34,6 +41,7 @@ defmodule HttpServer.Formatter do
       200 => "OK",
       201 => "Created",
       204 => "No content",
+      401 => "Unauthorized",
       404 => "Not found",
       405 => "Method not allowed"
     }[status]

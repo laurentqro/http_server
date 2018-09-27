@@ -1,6 +1,10 @@
 defmodule HttpServer.Controllers.Get do
   @public_dir "vendor/cob_spec/public"
 
+  def get(conn = %{ path: "/logs" }) do
+    HttpServer.Authenticate.authenticate(conn)
+  end
+
   def get(conn = %{ path: path }) do
     @public_dir <> path
     |> File.read

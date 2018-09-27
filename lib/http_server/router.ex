@@ -4,6 +4,10 @@ defmodule HttpServer.Router do
     HttpServer.Controllers.Get.get(conn)
   end
 
+  def route(conn = %{ method: _method, path: "/logs" }) do
+    HttpServer.Controllers.MethodForbidden.forbid(conn)
+  end
+
   def route(conn = %{ method: "PATCH" }) do
     HttpServer.Controllers.Patch.patch(conn)
   end

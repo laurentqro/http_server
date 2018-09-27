@@ -22,6 +22,7 @@ defmodule HttpServer.Parser do
     %{
       method: method,
       path: path,
+      headers: %{},
       req_body: req_body,
       resp_body: "",
       status: ""
@@ -38,6 +39,7 @@ defmodule HttpServer.Parser do
     %{
       method: method,
       path: path,
+      headers: %{},
       resp_body: "",
       status: "",
       allow: "",
