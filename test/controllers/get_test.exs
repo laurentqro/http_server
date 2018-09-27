@@ -43,7 +43,7 @@ defmodule HttpServer.Controllers.Get.Test do
     assert conn.status == 200
 
     for file_name <- directory_listing do
-      assert conn.resp_body |> String.contains?(file_name)
+      assert conn.resp_body |> String.contains?(~s(<a href="/#{file_name}">#{file_name}</a>))
     end
   end
 

@@ -16,7 +16,13 @@ defmodule HttpServer.Controllers.Get do
   end
 
   defp handle_file({:error, :eisdir}, conn = %{ path: path }) do
-    {:ok, resp_body } = @public_dir <> path |> File.ls
-    %{ conn | resp_body: resp_body |> Enum.join(" "), status: 200 }
+    {:ok, files } = @public_dir <> path |> File.ls
+    resp_body = files |> Enum.map(&to_link/1) |> Enum.join(" ")
+
+    %{ conn | resp_body: resp_body, status: 200 }
+  end
+
+  defp to_link(file) do
+    ~s(<a href="/#{file}">#{file}</a>)
   end
 end
