@@ -23,4 +23,8 @@ defmodule HttpServer.Router do
   def route(conn = %{ method: "OPTIONS" }) do
     HttpServer.Controllers.Options.options(conn)
   end
+
+  def route(conn) do
+    HttpServer.Controllers.MethodForbidden.forbid(conn)
+  end
 end

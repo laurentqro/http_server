@@ -10,23 +10,6 @@ defmodule HttpServer.Parser do
     parse(method, request)
   end
 
-  defp parse(method, request) when method in ["GET", "HEAD", "DELETE", "OPTIONS"] do
-    [method, path, _] =
-      request
-      |> String.split("\n")
-      |> List.first
-      |> String.split(" ")
-
-    %{
-      method: method,
-      path: path,
-      resp_body: "",
-      status: "",
-      allow: "",
-      content_type: ""
-    }
-  end
-
   defp parse(method, request) when method in ["PATCH", "PUT"] do
     [req_head, req_body] = request |> String.split("\r\n\r\n")
 
@@ -42,6 +25,23 @@ defmodule HttpServer.Parser do
       req_body: req_body,
       resp_body: "",
       status: ""
+    }
+  end
+
+  defp parse(_method, request) do
+    [method, path, _] =
+      request
+      |> String.split("\n")
+      |> List.first
+      |> String.split(" ")
+
+    %{
+      method: method,
+      path: path,
+      resp_body: "",
+      status: "",
+      allow: "",
+      content_type: ""
     }
   end
 end

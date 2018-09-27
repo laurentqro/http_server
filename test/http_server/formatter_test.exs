@@ -94,4 +94,16 @@ defmodule HttpServer.Formatter.Test do
 
     assert response == expected
   end
+
+  test "response to method that is now allowed" do
+    conn = %{ method: "gibberish", path: "/foo.txt", status: 405 }
+
+    response = HttpServer.Formatter.format_response(conn)
+
+    expected = """
+    HTTP/1.1 405 Method not allowed
+    """
+
+    assert response == expected
+  end
 end

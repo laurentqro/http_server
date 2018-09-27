@@ -3,12 +3,12 @@ defmodule HttpServer.Parser.Test do
 
   test "parses the HTTP method" do
     request = """
-    GET /hello-world.txt HTTP/1.1
+    FOOBAR /hello-world.txt HTTP/1.1
     """
 
     conn = HttpServer.Parser.parse(request)
 
-    assert conn.method == "GET"
+    assert conn.method == "FOOBAR"
   end
 
   test "parses the request path" do

@@ -41,12 +41,19 @@ defmodule HttpServer.Formatter do
     """
   end
 
+  def format_response(conn) do
+    """
+    HTTP/1.1 #{conn.status} #{reason(conn.status)}
+    """
+  end
+
   defp reason(status) do
     %{
       200 => "OK",
       201 => "Created",
       204 => "No content",
-      404 => "Not found"
+      404 => "Not found",
+      405 => "Method not allowed"
     }[status]
   end
 end
