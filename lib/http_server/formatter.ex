@@ -16,24 +16,6 @@ defmodule HttpServer.Formatter do
     """
   end
 
-  def format_response(conn = %{ method: "PUT"}) do
-    """
-    HTTP/1.1 #{conn.status} #{reason(conn.status)}
-    """
-  end
-
-  def format_response(conn = %{ method: "DELETE"}) do
-    """
-    HTTP/1.1 #{conn.status} #{reason(conn.status)}
-    """
-  end
-
-  def format_response(conn = %{ method: "HEAD"}) do
-    """
-    HTTP/1.1 #{conn.status} #{reason(conn.status)}
-    """
-  end
-
   def format_response(conn = %{ method: "OPTIONS"}) do
     """
     HTTP/1.1 #{conn.status} #{reason(conn.status)}
