@@ -34,6 +34,19 @@ defmodule HttpServer.Controllers.Get.Test do
     assert conn.status == 404
   end
 
+  test "it returns directory listing" do
+    conn = %{ path: "/", resp_body: "", status: 200 }
+    conn = HttpServer.Controllers.Get.get(conn)
+
+    {:ok, directory_listing} = @public_dir |> File.ls
+
+    assert conn.status == 200
+
+    for file_name <- directory_listing do
+      assert conn.resp_body |> String.contains?(file_name)
+    end
+  end
+
   defp create_fixture do
     @public_dir <> @path |> File.write!("bar")
   end

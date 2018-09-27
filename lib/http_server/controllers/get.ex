@@ -14,4 +14,9 @@ defmodule HttpServer.Controllers.Get do
   defp handle_file({:error, :enoent}, conn) do
     %{ conn | resp_body: "File not found", status: 404 }
   end
+
+  defp handle_file({:error, :eisdir}, conn = %{ path: path }) do
+    {:ok, resp_body } = @public_dir <> path |> File.ls
+    %{ conn | resp_body: resp_body |> Enum.join(" "), status: 200 }
+  end
 end
